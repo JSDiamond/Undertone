@@ -1,0 +1,25 @@
+void colorGrid(){
+  //make the color grid
+  colorCount = 0; 
+  yCount=0;
+  xCount=0; 
+  for (int i = 0; i < height/pixelSize; i++) {
+    //if (millis() > lastMillis+10) { //been at least 200 millis
+          //console.log("millis = "+millis());
+          //lastMillis=millis();
+          //console.log("lastMillis = "+lastMillis);
+    for (int j = 0; j < width/pixelSize; j++) {       
+      //if (colorCount < (conversionValuesArray.length/3)-4){
+        fill(conversionValuesArray[colorCount], conversionValuesArray[colorCount+1], conversionValuesArray[colorCount+2]);
+        colorCount+=3;
+      //} else {
+        //colorCount=0;
+      //}
+      noStroke();
+      rect(xCount,yCount,pixelSize,pixelSize);
+      xCount+=pixelSize;
+    }
+    xCount=0;
+    yCount+=pixelSize;
+  }  
+}
