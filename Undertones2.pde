@@ -18,6 +18,13 @@ String[] chars;
 int dataAmount;
 int dataRepeat;
 
+int randomCount;
+int limitFade;
+int[] clr = new int[3];
+int[] clrTarget = new int[3];
+color c1;
+PixelBox[] pixbox = new PixelBox[0];
+
 //Set up ASCII CHAR arrays for comparison with text
 String[] csv_input;
 float[] asciiDEC;
@@ -34,19 +41,22 @@ String[] parseRT;
 int xCount = 0;
 int yCount = 0;
 int colorCount = 0;
-int pixelSize = 10;
+int pixelSize = 1;
+int colorBoxSize = 10;
 int recordMode = 0;
 float lastMillis = 0;
 float mm;
 boolean textEntered;
 boolean makePixel;
 color thisBlock;
+String imageName = "123.png";
 
 void setup() {
   size(320, 400);
   smooth();
   background(255);
-  img = loadImage("manyq.png");
+  noStroke();
+  img = loadImage(imageName);
   //chars = poetry.split("");
   //println(chars);
   csv_input = loadStrings("ASCII_DEC_values.csv");
@@ -59,16 +69,25 @@ void setup() {
   loadASCII(); //function to load ascii from csv
   
   //set codeKey
-  codeKey = "```";
+  codeKey = "123";
   codeKeySplit = codeKey.split("");
   console.log("codeKeySplit = "+codeKeySplit);
   
-  dataAmount = ((width/pixelSize)*(height/pixelSize))*3;
+  dataAmount = ((width/colorBoxSize)*(height/colorBoxSize))*3;
+  
+  limitFade = floor(random(50, 200));
+  clrTarget[0]  = floor(random(100, 220));
+  clrTarget[1]  = floor(random(100, 220));
+  clrTarget[2]  = floor(random(100, 220));
 }
 
 void draw() {
   if(makePixel == true){
     colorGrid();
+  }
+  for (int i = 0; i < pixbox.length; i++) {
+    pixbox[i].display();
+    pixbox[i].update();
   }
 }
 
@@ -84,38 +103,6 @@ void loadASCII(){
   }
 }
 
-void parseText(String[] chars){
-  chars = allCharz;
-  dataRepeat = dataAmount/chars.length;
-  matchCharacters(chars);
-} 
-
-void colorGrid(){
-  //make the color grid
-  if(colorCount < dataAmount){
-   //if (millis() > lastMillis+0) { //been at least 1 millis
-     //lastMillis=millis();
-      if (xCount < width) {
-         for (int j = 0; j < width/pixelSize; j++) {       
-          thisBlock = color(conversionValuesArray[colorCount], conversionValuesArray[colorCount+1], conversionValuesArray[colorCount+2]);
-          colorCount+=3;
-          noStroke();
-          fill(thisBlock); 
-          rect(xCount,yCount,pixelSize,pixelSize);
-          xCount+=pixelSize;
-        }
-        xCount=width;
-      } else {
-        xCount=0;
-        yCount+=pixelSize;
-      }
-   //}
-  } else {
-      console.log("colorCount = "+colorCount+" & the loop has ended")
-      makePixel = false;
-  }
-}
-  
 void matchCharacters(String[] chars){
   //clear conversionColorsArray if this is not the first translateColor
   conversionValuesArray = new float[0];
@@ -136,19 +123,79 @@ void matchCharacters(String[] chars){
   yCount=0;
   xCount=0; 
   makePixel = true;
+  pixbox = expand(pixbox, 0);
   console.log("conversionValuesArray.length = " + conversionValuesArray.length);
 }
+
+void parseText(String[] chars){
+  chars = allCharz;
+  dataRepeat = dataAmount/chars.length;
+  matchCharacters(chars);
+} 
+
+void colorGrid(){
+  //make the color grid
+  
+  if(colorCount < dataAmount){
+   //if (millis() > lastMillis+0) { //been at least 1 millis
+     //lastMillis=millis();
+      if (xCount < width) {
+         for (int j = 0; j < width/colorBoxSize; j++) {       
+          thisBlock = color(conversionValuesArray[colorCount], conversionValuesArray[colorCount+1], conversionValuesArray[colorCount+2]);
+          
+          
+          if(colorCount==0){
+            clr[0]  = conversionValuesArray[colorCount];
+            clr[1]  = conversionValuesArray[colorCount+1];
+            clr[2]  = conversionValuesArray[colorCount+2];
+          }
+          if (randomCount > limitFade) {
+            clrTarget[0]  = clr[0];
+            clrTarget[1]  = clr[1];
+            clrTarget[2]  = clr[2];
+            clr[0]  = conversionValuesArray[colorCount];
+            clr[1]  = conversionValuesArray[colorCount+1];
+            clr[2]  = conversionValuesArray[colorCount+2];
+            limitFade = floor(random(50, 200));
+            randomCount=0;
+          }
+          randomCount+=1;
+          clrTarget[0]  += (clr[0]-clrTarget[0])*(limitFade*0.0001);//(clr[0]-clrTarget[0])*0.001;
+          clrTarget[1]  += (clr[1]-clrTarget[1])*(limitFade*0.0001);
+          clrTarget[2]  += (clr[2]-clrTarget[2])*(limitFade*0.0001);
+          c1 = color (clrTarget[0], clrTarget[1], clrTarget[2]);
+          
+          PixelBox temp = new PixelBox(xCount, yCount, c1, thisBlock);
+          pixbox = (PixelBox[])append (pixbox, temp);
+        
+          //fill(thisBlock); 
+          //rect(xCount+5,yCount+5,pixelSize,pixelSize);
+          colorCount+=3;
+          xCount+=colorBoxSize;
+        }
+        xCount=width;
+      } else {
+        xCount=0;
+        yCount+=colorBoxSize;
+      }
+   //}
+  } else {
+      console.log("colorCount = "+colorCount+" & the loop has ended");
+      console.log("pixbox.length = "+pixbox.length);
+      makePixel = false;
+  }
+}
+ 
 
 void translateColor(){  
   //clear conversionColorsArray if it is not the first use of translateColor
   conversionColorsArray = new float[0];
   
-  for (int i = 0; i < height/pixelSize; i++) {
-    for (int j = 0; j < width/pixelSize; j++) { 
+  for (int i = 0; i < height/colorBoxSize; i++) {
+    for (int j = 0; j < width/colorBoxSize; j++) { 
       
-      // Set the display pixel to the image pixel 
-      int y = i*pixelSize + pixelSize/2;
-      int x = j*pixelSize + pixelSize/2;
+      int y = i*colorBoxSize + colorBoxSize/2;
+      int x = j*colorBoxSize + colorBoxSize/2;
       int loc = x + y*width;
       
       loadPixels(); 
@@ -159,15 +206,6 @@ void translateColor(){
       conversionColorsArray = append(conversionColorsArray, r-20);
       conversionColorsArray = append(conversionColorsArray, g-20); 
       conversionColorsArray = append(conversionColorsArray, b-20); 
-      
-//      if(r+b+g == 531+60){
-//        recordMode += 1;
-//      } 
-//     if(recordMode == 1) {
-//        conversionColorsArray = append(conversionColorsArray, r-20);
-//        conversionColorsArray = append(conversionColorsArray, g-20); 
-//        conversionColorsArray = append(conversionColorsArray, b-20); 
-//      }
     }
   }
   matchColors();
@@ -224,6 +262,35 @@ void keyReleased() {
       matchColors();
     }
   }
+  
+  
+  
+class PixelBox {
+  int x = 0;
+  int y = 0;
+  color collor;
+  color centerColor;
+
+  PixelBox(int xin, int yin, color cin, color thisin) {
+    x = xin;
+    y = yin;
+    collor = cin;
+    centerColor = thisin;
+  }
+
+  void update() {
+  }
+
+  void display() {
+    fill(collor);
+    rect(x, y, colorBoxSize, colorBoxSize);
+    fill(centerColor);
+    rect(x+5,y+5,pixelSize,pixelSize);
+  }
+
+} 
+  
+  
 
 
 ////////////////////JQUERY FUNCTIONS////////////////////
@@ -273,7 +340,7 @@ void keyReleased() {
    
     $("#imageizer").click(function() {
       $(".presentText").text(textfill);
-      allCharzKeyed = "```"+textfill+"`````";
+      allCharzKeyed = "123"+textfill+"123";
       allCharz = allCharzKeyed.split("");
       allCharzLength = allCharz.length;
       console.log("allCharzKeyed = " + allCharzKeyed);
