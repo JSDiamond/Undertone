@@ -25,8 +25,7 @@
 <!--         <div data-role="header" data-position="fixed"><h1>This is the party</h1></div> -->
         <div data-role="content" class="giftWrap welcomeStyle">
              <div id="upSlides">
-                <img src="images/texttest1.png" alt="portrait1" width="600" height="600"/>
-               <!--  <img src="images/texttest3.png" alt="portrait2" width="600" height="600"/> -->
+                <!-- <img src="images/texttest1.png" alt="portrait1" width="600" height="600"/> -->
             </div>
             
             <!-- <h2>UNDERTONE</h2> -->
@@ -41,16 +40,29 @@
             <h4>funcrypt your text into color</h4>
             <a href="#ttc" data-role="button" data-transition="slidedown">text to color</a>
             <a href="#fileload" data-role="button" data-transition="slideup">color to text</a>
+            <a href="#setKey" data-role="button" data-transition="slideup">set keycode</a>
             
             <div id="downSlides">
-            <!-- <img src="images/texttest1.png" alt="portrait1" width="600" height="600"/> -->
-            <img src="images/texttest1.png" alt="portrait2" width="600" height="600"/>
+            <!-- <img src="images/texttest1.png" alt="portrait2" width="600" height="600"/> -->
         </div>
         
         </div>
 <!--         <div data-role="footer"  data-position="fixed"><h4>Copyright Everyone</h4></div> -->
 </div> 
 
+
+<div  data-role="page" id="setKey" data-title="Set Key"> 
+        <div data-role="content" class="giftWrap secondStyle">
+        
+            <h2>KEYCODE</h2>
+            <p><span>Give this keycode to anyone you want to read your messages.</span> They can add it to your contact info as an extra attribute. Hide this keycode from people you don't want reading your messages.</p>
+            <p>Change it up whenever you like.</p>
+            
+           <input type="text" name="keyset" id="keyset" placeholder="1234" />
+           <a href="#welcome" id="key" data-role="button" data-transition="slideup">save</a>
+            
+        </div>
+</div> 
 
 
 <div  data-role="page" id="ttc" data-title="T2C"> 
@@ -106,7 +118,7 @@
                 <label for="textarea"></label>
             	<textarea name="textarea" id="textreadout" placeholder="reading..."></textarea>
             </div>
-            <a href="#textfinder" id="welcome" data-role="button" data-transition="slideup">backhome</a>
+            <a href="#welcome" id="welcome" data-role="button" data-transition="slideup">back home</a>
             
         </div>
 </div> 

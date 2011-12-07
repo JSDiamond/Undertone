@@ -1,13 +1,22 @@
 @font-face {
     font-family: ProximaNova;
-    src:  local(ProximaNova-Semibold);
-    font-weight:400;
+    src:  local(ProximaNova-Bold);
+    font-weight:600;
 }
 @font-face {
     font-family: ProximaNovaReg;
     src:  local(ProximaNova-Regular);
     font-weight: 200;
 }
+@font-face {
+    font-family: ProximaNovaCondReg;
+    src:  local( ProximaNovaCond-Semibold);
+}
+@font-face {
+    font-family: ProximaNovaCondLight;
+    src:  local(ProximaNovaCond-Light);
+}
+
 
 .ui-body-c {
     //background-color: yellow;
@@ -21,8 +30,8 @@
 .giftWrap  h2 {
     font-family: ProximaNova, sans-serif;
     text-align: center;
-    font-size: 20px;
-    letter-spacing: 14px;
+    font-size: 22px;
+    letter-spacing: 10px;
     line-height: 20px;
     text-shadow: 1px  1px 1px yellow; /* rgb(88,191,60) */
     margin-top: 10px;
@@ -146,8 +155,15 @@
     text-shadow: 1px  1px 1px #fff; /* rgb(88,191,60) */
 }
 .ui-body-c .secondStyle  p {
-    color: #777 !important;
-    text-align: center;
+    color: #ccc !important;
+    text-align: left;
+    font-size: 16px;
+    font-family: ProximaNovaCondReg;
+    line-height: 22px;
+    letter-spacing: 1px;
+}
+.ui-body-c .secondStyle  p span {
+    color: fuchsia;
 }
 .ui-body-c .secondStyle #interpText {
     width: 310px;
@@ -161,21 +177,29 @@
     margin-left: auto;
     margin-right: auto;
 }
+#setKey #keyset {
+    margin-bottom: 40px;
+    margin-top: 40px;
+}
 
 /* /////////////////////////////////////////////////// */
 .ui-btn-up-c {
 	/* border: 1px solid #ccc ; */
 	border:none;
-	background: 			#444 /*{c-bup-background-color}*/;
+	background:#444;
 	font-weight: bold;
-	color: 					#FFF /*{c-bup-color}*/;
-	text-shadow: 0 /*{c-bup-shadow-x}*/ 1px /*{c-bup-shadow-y}*/ 1px /*{c-bup-shadow-radius}*/ #333 /*{c-bup-shadow-color}*/;
-	background-image: -webkit-gradient(linear, left top, left bottom, from(#4D4D4D /*{c-bup-background-start}*/), to(#444 /*{c-bup-background-end}*/)); /* Saf4+, Chrome */
-	background-image: -webkit-linear-gradient(top, #4D4D4D /*{c-bup-background-start}*/, #shadow /*{c-bup-background-end}*/); /* Chrome 10+, Saf5.1+ */
-	background-image:    -moz-linear-gradient(top, #fdfdfd /*{c-bup-background-start}*/, #eee /*{c-bup-background-end}*/); /* FF3.6 */
-	background-image:     -ms-linear-gradient(top, #fdfdfd /*{c-bup-background-start}*/, #eee /*{c-bup-background-end}*/); /* IE10 */
-	background-image:      -o-linear-gradient(top, #fdfdfd /*{c-bup-background-start}*/, #eee /*{c-bup-background-end}*/); /* Opera 11.10+ */
-	background-image:         linear-gradient(top, #fdfdfd /*{c-bup-background-start}*/, #eee /*{c-bup-background-end}*/);
+	font-size: 18px;
+	letter-spacing: 4px;
+	font-family: ProximaNova;
+	/* text-transform: uppercase; */
+	color: #FFF;
+	text-shadow: 0 1px 1px #ccc;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#4D4D4D ), to(#444));
+	background-image: -webkit-linear-gradient(top, #4D4D4D /*{c-bup-background-start}*/, #shadow /*{c-bup-background-end}*/); /
+    background-image: -moz-linear-gradient(top, #fdfdfd /*{c-bup-background-start}*/, #eee /*{c-bup-background-end}*/); /* FF3.6 */
+	background-image: -ms-linear-gradient(top, #fdfdfd /*{c-bup-background-start}*/, #eee /*{c-bup-background-end}*/); /* IE10 */
+	background-image: -o-linear-gradient(top, #fdfdfd /*{c-bup-background-start}*/, #eee /*{c-bup-background-end}*/); /* Opera 11.10+ */
+	background-image: linear-gradient(top, #fdfdfd /*{c-bup-background-start}*/, #eee /*{c-bup-background-end}*/);
 /*
 	float: left;
 	margin-left: auto;
@@ -186,10 +210,14 @@
 .ui-btn-hover-c {
 	/* border: 1px solid #bbbbbb ; */
 	border:none;
-	background: 			#dadada /*{c-bhover-background-color}*/;
+	background:#444;
 	font-weight: bold;
-	color: 					#DFDFDF /*{c-bhover-color}*/;
-	text-shadow: 0 /*{c-bhover-shadow-x}*/ 1px /*{c-bhover-shadow-y}*/ 1px /*{c-bhover-shadow-radius}*/ #333 /*{c-bhover-shadow-color}*/;
+	font-size: 18px;
+	letter-spacing: 4px;
+	font-family: ProximaNova;
+	/* text-transform: uppercase; */
+	color: #ddd;
+	text-shadow: 0 1px 1px #ccc;
 	background-image: -webkit-gradient(linear, left top, left bottom, from(#ededed /*{c-bhover-background-start}*/), to(#dadada /*{c-bhover-background-end}*/)); /* Saf4+, Chrome */
 	background-image: -webkit-linear-gradient(top, #3D3D3D /*{c-bhover-background-start}*/, #444 /*{c-bhover-background-end}*/); /* Chrome 10+, Saf5.1+ */
 	background-image:    -moz-linear-gradient(top, #ededed /*{c-bhover-background-start}*/, #dadada /*{c-bhover-background-end}*/); /* FF3.6 */
