@@ -54,17 +54,5 @@
             parseText();
             matchCharacters();
         });
-        
-        
-        $('#upSlides').cycle({ 
-            fx: 'none', 
-            timeout: 10, 
-            speed: 1000,
-         });   
-         $('#downSlides').cycle({ 
-            fx: 'none', 
-            timeout: 10, 
-            speed: 1000,
-         });   
 });
 

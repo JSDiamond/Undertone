@@ -14,6 +14,7 @@
 <link rel="stylesheet" style="text/css" href="giftWrap.css">
 <script type="text/javascript" src="jquery_mobile/jquery.mobile-1.0rc2.js"></script>
 <script type="text/javascript" src="jquery_image_cycle.js"></script>
+<script type="text/javascript" src="canvas2image.js"></script>
 
 <script src="processing.js" type="text/javascript"></script>
 </head>
@@ -22,32 +23,26 @@
 
 
 <div  data-role="page" id="welcome"  data-title="Welcome"> 
-<!--         <div data-role="header" data-position="fixed"><h1>This is the party</h1></div> -->
         <div data-role="content" class="giftWrap welcomeStyle">
-             <div id="upSlides">
-                <!-- <img src="images/texttest1.png" alt="portrait1" width="600" height="600"/> -->
-            </div>
             
+            <a href="#ttc" id="topttc" data-role="button" data-transition="slidedown">text to color</a>
             <!-- <h2>UNDERTONE</h2> -->
             <div class="centerList">
                 <ul>
                     <li class="titleLetter">U</li><li class="titleLetter">N</li><li class="titleLetter">D</li>
                     <li class="titleLetter">E</li><li class="titleLetter">R</li><li class="titleLetter">T</li>
                     <li class="titleLetter">O</li><li class="titleLetter">N</li><li class="titleLetter">E</li>
-                    <li class="titleLetter">S</li>
                 </ul>
             </div>
-            <h4>funcrypt your text into color</h4>
-            <a href="#ttc" data-role="button" data-transition="slidedown">text to color</a>
-            <a href="#fileload" data-role="button" data-transition="slideup">color to text</a>
-            <a href="#setKey" data-role="button" data-transition="slideup">set keycode</a>
+            <!-- <h4>funcrypt your text into color</h4> -->
+            <h4>message with color camouflage</h4>
             
-            <div id="downSlides">
-            <!-- <img src="images/texttest1.png" alt="portrait2" width="600" height="600"/> -->
-        </div>
+            <a href="#fileload" data-role="button" data-transition="slideup">color to text</a>
+            <!-- <a href="#setKey" data-role="button" data-transition="fade">set keycode</a> -->
+            
         
         </div>
-<!--         <div data-role="footer"  data-position="fixed"><h4>Copyright Everyone</h4></div> -->
+        <div data-role="footer"  data-position="fixed"><h4><a href="#setKey" data-role="button" data-transition="fade">set keycode</a></h4></div>
 </div> 
 
 
@@ -59,7 +54,7 @@
             <p>Change it up whenever you like.</p>
             
            <input type="text" name="keyset" id="keyset" placeholder="1234" />
-           <a href="#welcome" id="key" data-role="button" data-transition="slideup">save</a>
+           <a href="#welcome" id="key" data-role="button" data-transition="fade">save</a>
             
         </div>
 </div> 
@@ -78,30 +73,32 @@
             <a href="#viewfinder" id="imageizer" data-role="button" data-transition="slidedown">imagize</a>
             
         </div>
+        <div data-role="footer"  data-position="fixed"><h4><a href="#welcome"  data-role="button" data-transition="slidedown">reset</a></h4></div>
 </div> 
 
 
 <div  data-role="page" id="viewfinder" data-title="VIEWFINDER"> 
         <div data-role="content" class="giftWrap secondStyle">
         
-            <h2>VIEWFINDER</h2>
+            <!-- <h2>VIEWFINDER</h2> -->
             
-           <canvas data-processing-sources="Undertones2.pde" id="canvas1"></canvas> 	
+           <h4><canvas data-processing-sources="Undertones2.pde" id="canvas1"></canvas></h4> 	
            
            <label for="basic">File name:</label>
             <input type="text" name="filename" id="savename" value="filename" />
            <a href="#saved" id="saver" data-role="button" data-transition="slidedown">save this image</a>	
             
         </div>
+        <div data-role="footer"  data-position="fixed"><h4><a href="#welcome"  data-role="button" data-transition="slidedown">reset</a></h4></div>
 </div> 
 
 
 <div  data-role="page" id="fileload" data-title="T2C"> 
         <div data-role="content" class="giftWrap secondStyle">
         
-            <h2>COLOR LOADER</h2>
-            <p>Select File</p>
-            <img src="images/1122011103939.png" alt="fillerpic" id="showThisImage" width="320" height="400"/>            
+            <h2>SELECT FILE</h2>
+            <h4><img src="images/123a.png" alt="fillerpic" id="showThisImage" width="320" height="400"/> </h4>           
+            <a href="#ctt" id="textfind" data-role="button" data-transition="slideup">textize</a>
             <a href="#ctt" id="textfind" data-role="button" data-transition="slideup">textize</a>
             
         </div>
@@ -118,7 +115,8 @@
                 <label for="textarea"></label>
             	<textarea name="textarea" id="textreadout" placeholder="reading..."></textarea>
             </div>
-            <a href="#welcome" id="welcome" data-role="button" data-transition="slideup">back home</a>
+            <!-- <a href="#welcome" id="welcome" data-role="button" data-transition="slideup">back home</a> -->
+            <div data-role="footer"  data-position="fixed"><h4><a href="#welcome" id="welcome" data-role="button" data-transition="slideup">reset</a></h4></div>
             
         </div>
 </div> 

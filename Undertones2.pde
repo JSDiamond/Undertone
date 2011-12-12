@@ -49,7 +49,7 @@ float mm;
 boolean textEntered;
 boolean makePixel;
 color thisBlock;
-String imageName = "123.png";
+String imageName = "1234.png";
 
 void setup() {
   size(320, 400);
@@ -69,7 +69,7 @@ void setup() {
   loadASCII(); //function to load ascii from csv
   
   //set codeKey
-  codeKey = "123";
+  codeKey = "1234";
   codeKeySplit = codeKey.split("");
   console.log("codeKeySplit = "+codeKeySplit);
   
@@ -99,9 +99,14 @@ void loadASCII(){
     asciiCHAR[i] = splits[1];
     asciiCHAR[12] = ",";
     asciiCHAR[2] = "\"";
-    //println("asciiDEC = "+asciiDEC[i]);
   }
 }
+
+void parseText(String[] chars){
+  chars = allCharz;
+  dataRepeat = dataAmount/chars.length;
+  matchCharacters(chars);
+} 
 
 void matchCharacters(String[] chars){
   //clear conversionColorsArray if this is not the first translateColor
@@ -112,8 +117,8 @@ void matchCharacters(String[] chars){
       for(int j = 0; j < csv_input.length; j++){
           if(chars[i].equals(asciiCHAR[j])){
             int matchVals = int(asciiDEC[j]);
-            //println("matchVals = "+matchVals);,
-            conversionValuesArray = append(conversionValuesArray, matchVals+20); 
+            //println("matchVals = "+matchVals);
+            conversionValuesArray = append(conversionValuesArray, matchVals); 
             //println("conversionValuesArray"+i+ " = " +conversionValuesArray[i]);
           }
         }
@@ -127,12 +132,6 @@ void matchCharacters(String[] chars){
   console.log("conversionValuesArray.length = " + conversionValuesArray.length);
 }
 
-void parseText(String[] chars){
-  chars = allCharz;
-  dataRepeat = dataAmount/chars.length;
-  matchCharacters(chars);
-} 
-
 void colorGrid(){
   //make the color grid
   
@@ -142,7 +141,6 @@ void colorGrid(){
       if (xCount < width) {
          for (int j = 0; j < width/colorBoxSize; j++) {       
           thisBlock = color(conversionValuesArray[colorCount], conversionValuesArray[colorCount+1], conversionValuesArray[colorCount+2]);
-          
           
           if(colorCount==0){
             clr[0]  = conversionValuesArray[colorCount];
@@ -165,7 +163,7 @@ void colorGrid(){
           clrTarget[2]  += (clr[2]-clrTarget[2])*(limitFade*0.0001);
           c1 = color (clrTarget[0], clrTarget[1], clrTarget[2]);
           
-          PixelBox temp = new PixelBox(xCount, yCount, c1, thisBlock);
+          PixelBox temp = new PixelBox(xCount, yCount, conversionValuesArray[colorCount], conversionValuesArray[colorCount+1], conversionValuesArray[colorCount+2], clrTarget[0], clrTarget[1], clrTarget[2]);
           pixbox = (PixelBox[])append (pixbox, temp);
         
           //fill(thisBlock); 
@@ -202,10 +200,9 @@ void translateColor(){
       float r = red(img.pixels[loc]); 
       float g = green(img.pixels[loc]);
       float b = blue(img.pixels[loc]);
-      
-      conversionColorsArray = append(conversionColorsArray, r-20);
-      conversionColorsArray = append(conversionColorsArray, g-20); 
-      conversionColorsArray = append(conversionColorsArray, b-20); 
+      conversionColorsArray = append(conversionColorsArray, r);
+      conversionColorsArray = append(conversionColorsArray, g); 
+      conversionColorsArray = append(conversionColorsArray, b); 
     }
   }
   matchColors();
@@ -268,23 +265,32 @@ void keyReleased() {
 class PixelBox {
   int x = 0;
   int y = 0;
-  color collor;
-  color centerColor;
+  float clr1;
+  float clr2;
+  float clr3;
+  float blk1;
+  float blk2;
+  float blk3;
 
-  PixelBox(int xin, int yin, color cin, color thisin) {
+  PixelBox(int xin, int yin, float clr1in, float clr2in, float clr3in, float blk1in,float blk2in, float blk3in) {
     x = xin;
     y = yin;
-    collor = cin;
-    centerColor = thisin;
+    clr1 = clr1in;
+    clr2 = clr2in;
+    clr3 = clr3in;
+    blk1 = blk1in;
+    blk2 = blk2in;
+    blk3 = blk3in;
   }
 
   void update() {
   }
 
   void display() {
-    fill(collor);
+    fill(blk1, blk2, blk3);
+    //fill(190,120,140);
     rect(x, y, colorBoxSize, colorBoxSize);
-    fill(centerColor);
+    fill(clr1, clr2, clr3);
     rect(x+5,y+5,pixelSize,pixelSize);
   }
 
@@ -313,26 +319,20 @@ class PixelBox {
     //if window is resized, fit giftWrap class to fill new window size
      $(window).resize(function() {
         windowHeight = (-($(document).width())/2)-60;
-          $('.giftWrap').css("height", windowHeight);
+        $('.giftWrap').css("height", windowHeight);
     });
     
     $("#textarea").keyup(function () {
-    textfill = $(this).val();
-    typingCount = textfill.split("");
-    $('#tcounter').html("character count: "+typingCount.length);
-    console.log(textfill);
-    
-//    allCharzKeyed = textfill;
-//    allCharz = allCharzKeyed.split("");
-//      for(i=0; i<allCharz.length; i++){
-//         console.log("allCharz"+[i]+" = "+allCharz[i]);
-//      }
+      textfill = $(this).val();
+      typingCount = textfill.split("");
+      $('#tcounter').html("character count: "+typingCount.length);
+      //console.log(textfill);
     }).keyup();
     
 
     $("#textarea").keydown(function () {
         if (event.keyCode == '13') { 
-         if (event.keyCode == '13') { event.preventDefault(); } 
+        if (event.keyCode == '13') { event.preventDefault(); } 
             $(this).val($(this).val()+" ");
         }
     }).keydown();
@@ -340,7 +340,7 @@ class PixelBox {
    
     $("#imageizer").click(function() {
       $(".presentText").text(textfill);
-      allCharzKeyed = "123"+textfill+"123";
+      allCharzKeyed = codeKey+textfill+codeKey;
       allCharz = allCharzKeyed.split("");
       allCharzLength = allCharz.length;
       console.log("allCharzKeyed = " + allCharzKeyed);
@@ -363,37 +363,41 @@ class PixelBox {
     $('#viewfinder').live('pageshow',function(event){
         console.log("pageload");
         parseText(allCharz);
-//        parseText();
-//        setTimeout(matchCharacters, 200);
+    });
+    
+        
+    $('#key').click(function(){
+      var newKey = $('#keyset').val();
+      codeKey = newKey;
+      console.log("newKey = "+newKey);
     });
   
     $("#savename").val(timename);
     
-    $('#saver').click(function() {
-      filenameSave = $("#savename").val();
-      console.log("filenameSave = "+ filenameSave);
-      save(filenameSave);
-    });
+//    $('#saver').click(function() {
+//      filenameSave = $("#savename").val();
+//      console.log("filenameSave = "+ filenameSave);
+//      save(filenameSave);
+//    });
+      
+      $('#saver').click(function() {
+        filenameSave = $("#savename").val();
+        var canvas = document.getElementById("canvas1");
+        Canvas2Image.saveAsPNG(canvas); 
+        //var img = canvas.toDataURL("image/png");
+      });
+
     
     //$('#showThisImage').attr({src: "images/"+filenameSave});
     
     $('#ctt').live('pageshow',function(event){
       //loadTheImage();
+      console.log("this function is broken");
       translateColor();
       $('#textreadout').val(parseRT[1]);
     });
     
-    
-    $('#upSlides').cycle({ 
-        fx: 'none', 
-        timeout: 10, 
-        speed: 1000,
-     });   
-     $('#downSlides').cycle({ 
-        fx: 'none', 
-        timeout: 10, 
-        speed: 1000,
-     });   
+ 
 });
 
 
